@@ -1,3 +1,3 @@
 module agniunit.demo.http
 
-go 1.22
+go 1.24
