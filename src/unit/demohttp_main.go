@@ -1,7 +1,7 @@
 /*
 #########################################################################################
 
-	Author        :   D. Ajith Nilanta de Silva ajithdesilva@gmail.com
+	Author        :   D. Ajith Nilantha de Silva ajithdesilva@gmail.com
 	Class/module  :   demohttp AgniOne Unit
 	Objective     :   Demonstrate AgniOne Unit implementation with the help of AgniOne Application
 						Framework utilizing the build-in AgniOne HTTP plugin
@@ -68,19 +68,16 @@ func (appc *AUDemoHttp) Initialize(pFM_Instance izappfm.IAgniApp, pInstance_ID i
 	pAppunit_Name string, pAppunit_Path string, pConfig_File string) (bool, error) {
 
 	/// 1. Try to initialize the base
-	_, _err := appc.base.Initialize(pFM_Instance, pInstance_ID, pAppunit_Name, pAppunit_Path, pConfig_File)
-	if _err != nil {
+	if _, _err := appc.base.Initialize(pFM_Instance, pInstance_ID, pAppunit_Name, pAppunit_Path, pConfig_File); _err != nil {
 		return false, _err
 	}
 
 	/// loads the configuration
-	var _fileData *[]byte
-
+	_fileData, _err := appc.base.AppFramework.Get_File_Content(&pConfig_File)
 	defer func() {
 		_fileData = nil
 	}()
 
-	_fileData, _err = appc.base.AppFramework.Get_File_Content(&pConfig_File)
 	if _err != nil {
 
 		_info := appc.base.App_UID + " - Application Unit " + pAppunit_Name + " failed to read the config file " + pConfig_File + _err.Error()
@@ -141,7 +138,7 @@ func (appc *AUDemoHttp) Deinitialize() {
 
 	// 2. base.Deinitialize()
 	appc.base.Deinitialize()
-	appc.base.Write2Log(appc.base.App_UID+" - Deinitialize..... DONE", fmtypes.LOG_INFO)
+	appc.base.Write2Log(appc.base.App_UID+" - Deinitializing..... DONE", fmtypes.LOG_INFO)
 }
 
 func (appc *AUDemoHttp) Start() (bool, error) {

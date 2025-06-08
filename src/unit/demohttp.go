@@ -1,7 +1,7 @@
 /*
 #########################################################################################
 
-	Author        :   D. Ajith Nilanta de Silva ajithdesilva@gmail.com
+	Author        :   D. Ajith Nilantha de Silva ajithdesilva@gmail.com
 	Class/module  :   demohttp AgniOne Unit
 	Objective     :   Demonstrate AgniOne Unit implementation with the help of AgniOne Application
 						Framework utilizing the build-in AgniOne HTTP plugin
@@ -34,7 +34,7 @@ import (
 
 func (appc *AUDemoHttp) IsReady() bool {
 
-	appc.base.AppFramework.Write2Log("cheking ready status", fmtypes.LOG_INFO)
+	appc.base.AppFramework.Write2Log("checking ready status", fmtypes.LOG_INFO)
 
 	_httpClient, _err := appc.base.AppFramework.Get_RESTClient(&appc.config.Get.Plugin_Type)
 	if _err != nil {
@@ -65,7 +65,7 @@ func (appc *AUDemoHttp) IsReady() bool {
 	}()
 
 	if _err != nil {
-		appc.base.AppFramework.Write2Log(appc.base.App_UID+" - cheking ready status failed - "+_err.Error(), fmtypes.LOG_ERROR)
+		appc.base.AppFramework.Write2Log(appc.base.App_UID+" - checking ready status failed - "+_err.Error(), fmtypes.LOG_ERROR)
 
 		//// send the monitoring message to web-socket monitor
 		appc.base.Send_Event_Message(appc.base.Generate_Event_Message(
@@ -75,12 +75,12 @@ func (appc *AUDemoHttp) IsReady() bool {
 			map[string]string{
 				"action": "IsReady",
 				"entry":  _httpReq.URL,
-				"info":   appc.base.App_UID + " - cheking ready status failed -" + _err.Error(),
+				"info":   appc.base.App_UID + " - checking ready status failed -" + _err.Error(),
 				"time":   strconv.FormatInt(time.Now().Unix(), 10)}))
 		return false
 
 	} else {
-		appc.base.AppFramework.Write2Log(appc.base.App_UID+" - cheking ready status :: Status code: "+strconv.Itoa(_httResp.StatusCode), fmtypes.LOG_INFO)
+		appc.base.AppFramework.Write2Log(appc.base.App_UID+" - checking ready status :: Status code: "+strconv.Itoa(_httResp.StatusCode), fmtypes.LOG_INFO)
 		return true
 	}
 }
@@ -133,7 +133,9 @@ func (appc *AUDemoHttp) DoGet() {
 			appc.base.AppFramework.Write2Log(appc.base.App_UID+" - application forced to stop", fmtypes.LOG_INFO)
 			return
 		case <-_ticker.C:
+			defer appc.base.Decrease_Active_Count()
 			appc.base.Increase_Active_Count()
+
 			_httResp, _err := _httpClient.Get(_httpReq)
 
 			if _err != nil {
@@ -150,7 +152,7 @@ func (appc *AUDemoHttp) DoGet() {
 					map[string]string{
 						"action": "Get",
 						"entry":  _httpReq.URL,
-						"info":   appc.base.App_UID + " - DoGet failed to load fetch the request -" + _err.Error(),
+						"info":   " - DoGet failed to load fetch the request -" + _err.Error(),
 						"time":   strconv.FormatInt(time.Now().Unix(), 10)}))
 
 				appc.base.Decrease_Active_Count()
@@ -161,13 +163,9 @@ func (appc *AUDemoHttp) DoGet() {
 
 				appc.base.AppFramework.Write2Log(appc.base.App_UID+" - ["+strconv.Itoa(_count)+"] - GET Result :: Status code: "+strconv.Itoa(_httResp.StatusCode), fmtypes.LOG_INFO)
 
-				var _key string
-				var _val string
-				for _key, _val = range _httResp.Headers {
+				for _key, _val := range _httResp.Headers {
 					_headers.WriteString(_key + ":" + _val + "\n")
 				}
-				_key = ""
-				_val = ""
 
 				appc.base.AppFramework.Write2Log(appc.base.App_UID+" - Headers :\r\n"+_headers.String(), fmtypes.LOG_INFO)
 				_headers.Reset()
@@ -180,12 +178,10 @@ func (appc *AUDemoHttp) DoGet() {
 					map[string]string{
 						"action": "POST",
 						"entry":  _httpReq.URL,
-						"info":   appc.base.App_UID + " - [" + strconv.Itoa(_count) + "] - GET Result :: Status code: " + strconv.Itoa(_httResp.StatusCode),
+						"info":   " - [" + strconv.Itoa(_count) + "] - GET Result :: Status code: " + strconv.Itoa(_httResp.StatusCode),
 						"time":   strconv.FormatInt(time.Now().Unix(), 10)}))
 
 			}
-
-			appc.base.Decrease_Active_Count()
 			_count++
 		}
 
@@ -247,6 +243,7 @@ func (appc *AUDemoHttp) DoPost() {
 			return
 		case <-_ticker.C:
 
+			defer appc.base.Decrease_Active_Count()
 			appc.base.Increase_Active_Count()
 
 			if _reqBody, _err := json.Marshal(
@@ -278,7 +275,7 @@ func (appc *AUDemoHttp) DoPost() {
 					map[string]string{
 						"action": "POST",
 						"entry":  _httpReq.URL,
-						"info":   appc.base.App_UID + " - DoPost Failed to load fetch the request -" + _err.Error(),
+						"info":   "- DoPost Failed to load fetch the request -" + _err.Error(),
 						"time":   strconv.FormatInt(time.Now().Unix(), 10)}))
 
 			} else {
@@ -301,7 +298,7 @@ func (appc *AUDemoHttp) DoPost() {
 					map[string]string{
 						"action": "POST",
 						"entry":  _httpReq.URL,
-						"info":   appc.base.App_UID + " - DoPost Result :: Status code: " + strconv.Itoa(_httResp.StatusCode),
+						"info":   " - DoPost Result :: Status code: " + strconv.Itoa(_httResp.StatusCode),
 						"time":   strconv.FormatInt(time.Now().Unix(), 10)}))
 
 			}

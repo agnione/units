@@ -49,12 +49,12 @@ Basically, to launch AgniOne Unit, it AgniOne Framework requires 3 files.
         "get":{
             "plugin_type":"default",
             "url":"https://httpbin.org/get",
-            "frequancy_secs":3
+            "frequency_secs":3
         },
         "post":{
             "plugin_type":"default",
             "url":"https://httpbin.org/post",
-            "frequancy_secs":3
+            "frequency_secs":3
         }
     }
     
