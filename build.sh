@@ -18,17 +18,13 @@
 echo "Changed to the Unit folder"
 cd $(dirname "$0")
 
-ls -l
-
 UNIT_NAME=demohttp
 VESRION=1.0.0
 SOURCE="./unit/demohttp_main.go ./unit/demohttp.go"
 BINARY=./unit/demohttp.so
 
-
 BuildTime=`date`
 BuildGoVersion=`go version`
-
 
 # Setup the -ldflags option for build 
 LDFLAGS=" -s -w -X 'unit.demo.http/src/build.Version=${VESRION}' \
