@@ -15,7 +15,10 @@
 #        ./build.sh ~/AgniOneFM/AgniOne
 ##########################################################################################################################
 
+echo "Changed to the Unit folder"
 cd $(dirname "$0")
+
+ls -l
 
 UNIT_NAME=demohttp
 VESRION=1.0.0
@@ -55,15 +58,17 @@ cd ..
 mkdir -p $1/apps/configs/${UNIT_NAME}
 
 cd ./config
-cp ./app.config ./apptemp.config
-
 cp ./${UNIT_NAME}.config $1/apps/configs/${UNIT_NAME}/
 
 ## make the unit & config path in the app.config
-sed -i "s|UNIT|$1/apps/units/${UNIT_NAME}.so|g" ./apptemp.config
-sed -i "s|CONFIG|$1/apps/configs/${UNIT_NAME}/${UNIT_NAME}.config|g" ./apptemp.config
+echo "Updating the application configuration ........."
+cp ./app.config ./app.temp
 
-mv ./apptemp.config $1/apps/config/${UNIT_NAME}/app.config
+sed -i "s|UNIT|$1/apps/units/${UNIT_NAME}.so|g" ./app.temp
+sed -i "s|CONFIG|$1/apps/configs/${UNIT_NAME}/${UNIT_NAME}.config|g" ./app.temp
+mv ./app.temp $1/apps/configs/${UNIT_NAME}/app.config
+
+echo "Updating the application configuration ......... DONE"
 
 echo "Deployed  ${UNIT_NAME}.so to $1/apps/units/${UNIT_NAME}.so"
 echo "Deploying ${UNIT_NAME}.config to $1/apps/configs/${UNIT_NAME}/${UNIT_NAME}.config"

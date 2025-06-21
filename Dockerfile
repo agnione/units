@@ -24,7 +24,6 @@ FROM golang:1.24.4-alpine AS agnione_unit_builder
 
 RUN apk --no-cache add build-base bash git
 
-RUN mkdir -p /home/units/
-RUN mkdir -p /home/src/units
+RUN mkdir -p /home/src
 
 WORKDIR /home/src
