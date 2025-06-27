@@ -1,0 +1,40 @@
+#################################################################################################################
+# Author        :   D. Ajith Nilantha de Silva ajithdesilva@gmail.com,aontact@agnione.net
+# Copyright     :   AgniOne.Net 2025
+# Date Written  :   27/06/2025
+# Class/module  :   AgniOne Unit Demo Http Application launcher
+# Objective     :   Use the published Alpine amd64 latest as platform for AgniOne unit that can work with production docker 
+#                   image of  AgniOne Framework.
+#################################################################################################################
+# 1.  Launch the Framework with the pre-build agnione HTT demo unit
+#   attached mode
+#      docker-compose up 
+#   detached mode
+#      docker-compose up -d
+#
+# 2. View logs in SSH terminal
+#   tail -f /var/log/app/*
+#
+# 3. Real-time monitoring
+#   1. logs   - http://localhost:8080/monitor/view/logs
+#   2. events - http://localhost:8080/monitor/view/events
+#   3. status - http://localhost:8080/monitor/view/status 
+#
+# 4. stop http demo container in interactive mode 
+#   CTRL + C
+#
+# 5. remove/delete docker container 
+#   docker-compose down
+#################################################################################################################
+
+services:
+  proxy:
+    image: agnione/appfm:0.0.0.2-release ### use the official image from docker hub
+    volumes:
+        - ./apps/units/demohttp/demohttp.so:/home/agnione/apps/units/demohttp/demohttp.so ### mount the AgniOne Unit
+        - ./apps/configs/demohttp/app.config:/home/agnione/apps/configs/app.config        ### mount the application launch config
+        - ./apps/configs/demohttp/demohttp.config:/home/agnione/apps/configs/demohttp.config  ### mount he AgnOne Unit specific configuration
+        - /var/log/app:/home/agnione/logs
+    ports:
+      - 8080:8080 ### REST API PORT
+      - 801:8081 ### profiler port

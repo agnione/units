@@ -26,7 +26,6 @@ import (
 	httptypes "agnione/v2/src/afplugins/http/types"
 	fmtypes "agnione/v2/src/appfm/types"
 	"encoding/json"
-	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -248,9 +247,9 @@ func (appc *AUDemoHttp) DoPost() {
 
 			if _reqBody, _err := json.Marshal(
 				AuthReq{
-					ApiKey:         fmt.Sprintf("b3-45a4-826d-23453%v", time.Now().UnixMilli()),
+					ApiKey:         "b3-45a4-826d-23453-" + strconv.FormatInt(int64(time.Millisecond), 10),
 					AppName:        "3f93916b-e9b3-45a4-53@TestAPP",
-					ConversationId: fmt.Sprintf("%s -DEMO-POST Body -%d", appc.base.App_UID, _count),
+					ConversationId: appc.base.App_UID + " - DEMO-POST Body - " + strconv.Itoa(_count),
 				}); _err != nil {
 
 				appc.base.AppFramework.Write2Log(appc.base.App_UID+" - DoPost error occurred while constructing body "+_err.Error(), fmtypes.LOG_ERROR)

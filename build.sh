@@ -46,9 +46,10 @@ go build -v -buildmode=plugin -ldflags="${LDFLAGS}" -o ${BINARY} ${SOURCE}
 echo "building plug-in ......... DONE"
 
 echo "Deploying ${UNIT_NAME} to $1/apps/units/${UNIT_NAME}.so"
+mkdir -p $1/apps/units/
+cp ${BINARY} $1/apps/units/
 
-cp ${BINARY} $1/apps/units
-
+echo "building plug-in ......... DONE............."
 cd ..
 
 mkdir -p $1/apps/configs/${UNIT_NAME}
