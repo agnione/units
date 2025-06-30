@@ -13,7 +13,7 @@
 #      docker-compose up -d
 #
 # 2. View logs in SSH terminal
-#   tail -f /var/log/app/*
+#   tail -f /var/log/app/*.log
 #
 # 3. Real-time monitoring
 #   1. logs   - http://localhost:8080/monitor/view/logs
@@ -31,7 +31,7 @@ services:
   proxy:
     image: agnione/appfm:0.0.0.2-release ### use the official image from docker hub
     volumes:
-        - ./apps/units/demohttp/demohttp.so:/home/agnione/apps/units/demohttp/demohttp.so ### mount the AgniOne Unit
+        - ./apps/units/demohttp/demohttp.so:/home/agnione/apps/units/demohttp.so ### mount the AgniOne Unit
         - ./apps/configs/demohttp/app.config:/home/agnione/apps/configs/app.config        ### mount the application launch config
         - ./apps/configs/demohttp/demohttp.config:/home/agnione/apps/configs/demohttp.config  ### mount he AgnOne Unit specific configuration
         - /var/log/app:/home/agnione/logs
