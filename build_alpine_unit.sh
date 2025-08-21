@@ -27,10 +27,7 @@ docker exec unit_builder apk --no-cache add build-base bash git
 
 ## make for parent target folder
 echo "Creating target folders"
-docker exec unit_builder mkdir -p -m 755 /usr/local/go/src/agnione
-docker exec unit_builder mkdir -p -m 755 /usr/src
-docker exec unit_builder mkdir -p -m 755 /home/agnione/apps/units
-docker exec unit_builder mkdir -p -m 755 /home/agnione/apps/configs
+docker exec unit_builder mkdir -p -m 755 /usr/local/go/src/agnione /usr/src /home/agnione/apps/units /home/agnione/apps/configs
 
 echo "Get AgniOne packages"
 docker exec unit_builder git clone -b v2 https://github.com/agnione/libs.git  

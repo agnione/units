@@ -1,12 +1,12 @@
 #################################################################################################################
-# Author        :   D. Ajith Nilantha de Silva ajithdesilva@gmail.com,aontact@agnione.net
+# Author        :   D. Ajith Nilantha de Silva ajithdesilva@gmail.com, contact@agnione.net
 # Copyright     :   AgniOne.Net 2025
 # Date Written  :   27/06/2025
 # Class/module  :   AgniOne Unit Demo Http Application launcher
 # Objective     :   Use the published Alpine amd64 latest as platform for AgniOne unit that can work with production docker 
 #                   image of  AgniOne Framework.
 #################################################################################################################
-# 1.  Launch the Framework with the pre-build agnione HTT demo unit
+# 1.  Launch the Framework with the pre-build agnione HTTP demo unit
 #   attached mode
 #      docker-compose up 
 #   detached mode
@@ -14,12 +14,15 @@
 #
 # 2. View logs in SSH terminal
 #   tail -f /var/log/app/*.log
+#   **** if tail does not display log entries, it mus tbe the permission for the apps folder in /var/log
+#   **** please run command sudo chown <YOUR_USER-NAME>:<YOUR_GROUP-NAME> -R /var/log/app
+
 #
 # 3. Real-time monitoring
 #   1. logs   - http://localhost:8080/monitor/view/logs
 #   2. events - http://localhost:8080/monitor/view/events
-#   3. status - http://localhost:8080/monitor/view/status 
-#
+#   3. status - http://localhost:8080/monitor/view/status
+# 
 # 4. stop http demo container in interactive mode 
 #   CTRL + C
 #
